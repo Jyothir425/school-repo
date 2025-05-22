@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Rooms</title>
+</head>
+<body>
+    <h1>Chat Rooms</h1>
+    <ul>
+    {% for room in rooms_queryset %} {# Ensure view passes rooms_queryset or adjust context name #}
+        <li>{{ room.name }}</li>
+    {% empty %}
+        <li>No rooms available.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

@@ -39,8 +39,9 @@ class QuestionUpdateView(generics.UpdateAPIView):
     serializer_class = QuestionSerializer
 
     def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False) # Get partial from kwargs
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
+        serializer = self.get_serializer(instance, data=request.data, partial=partial) # Pass partial
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response({
