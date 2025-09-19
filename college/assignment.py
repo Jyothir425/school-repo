@@ -32,3 +32,5 @@ def assignNewAssignment():
             if int(assignment.mark) > 1:
                 Student.objects.filter(id=student.id).update(assignment_id=2)
 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
