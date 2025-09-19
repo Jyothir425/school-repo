@@ -55,3 +55,7 @@ class IsTeacher(permissions.BasePermission):
         if request.user.user_type == 2:
             return request.user
         return False
+
+
+
+#restxcyjgvhbklnm;,wserxtcgfbhj
