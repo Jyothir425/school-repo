@@ -42,5 +42,3 @@ class CreateRoomView(generics.CreateAPIView):
             'data': serializer.data
         })
 
-
-@#@#@#@#@#@#
