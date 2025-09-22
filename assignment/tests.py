@@ -120,3 +120,6 @@ class AssignmentMarkCreateViewTests(TestCase):
         response = self.client.post(url, self.assignment_mark_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN) # Changed from 401 to 403
         self.assertEqual(AssignmentMark.objects.count(), 0)
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
