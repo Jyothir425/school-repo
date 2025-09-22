@@ -66,3 +66,6 @@ class TeacherAttendanceCreateView(generics.CreateAPIView):
             'message': 'Marked attendance successfully.',
             'data': serializer.data
         })
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
