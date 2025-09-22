@@ -121,5 +121,3 @@ class AssignmentMarkCreateViewTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN) # Changed from 401 to 403
         self.assertEqual(AssignmentMark.objects.count(), 0)
 
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
