@@ -15,9 +15,18 @@ from .permission import CanCreateRoom
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def index_view(request):
-    return Response({
-        'rooms': Room.objects.all(),
-    })
+    # For JSON response, serialize the data
+    if request.accepted_renderer.format == 'json':
+        serializer = RoomSerializer(Room.objects.all(), many=True)
+        return Response({'rooms': serializer.data})
+    
+    # For HTML response, a template name is required.
+    # If no template is intended, TemplateHTMLRenderer should not be listed.
+    # Assuming a placeholder template name for now if HTML is truly desired.
+    # Or, this branch could be removed if JSON is the only focus.
+    # For robust HTML, context should be structured for the template.
+    response_data = {'rooms_queryset': Room.objects.all()} # Pass queryset to template context
+    return Response(response_data, template_name='chat/index.html') # Example template
 
 
 class CreateRoomView(generics.CreateAPIView):

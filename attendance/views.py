@@ -40,7 +40,8 @@ class ShowAttendanceView(generics.ListAPIView):
 
 
 class StudentAttendanceCreateView(generics.CreateAPIView):
-    permission_classes = (IsAuthenticated, CanMarkAttendance, IsStudent,)
+    # Reordered permissions: IsStudent should be checked before CanMarkAttendance
+    permission_classes = (IsAuthenticated, IsStudent, CanMarkAttendance,)
 
     def post(self, request, *args, **kwargs):
         serializer = StudentAttendanceSerializer(data=request.data)
@@ -65,3 +66,5 @@ class TeacherAttendanceCreateView(generics.CreateAPIView):
             'message': 'Marked attendance successfully.',
             'data': serializer.data
         })
+
+

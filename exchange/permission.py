@@ -21,10 +21,22 @@ class CanAccessComment(permissions.BasePermission):
 
 class CanAddComment(permissions.BasePermission):
     def has_permission(self, request, view):
-        teacher = Teacher.objects.get(user_id=request.user)
-        question = Question.objects.get(id=request.data['question'])
-        if teacher.subject.id == question.tag.id:
-            return True
+        try:
+            teacher = Teacher.objects.get(user_id=request.user.id) # Use request.user.id
+            question_id = request.data.get('question')
+            if not question_id:
+                return False # 'question' ID not provided in payload
+            question = Question.objects.get(id=question_id)
+            
+            # Check if teacher's subject matches the question's tag (which is a Subject instance)
+            if teacher.subject and question.tag and teacher.subject.id == question.tag.id:
+                return True
+        except Teacher.DoesNotExist:
+            return False # User is not a teacher or has no TeacherProfile
+        except Question.DoesNotExist:
+            return False # Question specified in payload does not exist
+        except Exception: # Catch any other unexpected errors
+            return False
         return False
 
 
@@ -43,3 +55,7 @@ class IsTeacher(permissions.BasePermission):
         if request.user.user_type == 2:
             return request.user
         return False
+
+
+
+#restxcyjgvhbklnm;,wserxtcgfbhj

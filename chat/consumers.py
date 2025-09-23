@@ -21,32 +21,38 @@ class ChatConsumer(WebsocketConsumer):
         self.room_group_name = f'chat_{self.room_name}'
         self.room = Room.objects.get(name=self.room_name)
         self.user = self.scope['user']
+        
+        accepted_connection = False
+        if self.user and self.user.is_authenticated:
+            if self.room.type == 1: # Student room
+                type_list = [1, 2, 3, 4] # Student, Teacher, HOD, Management
+                if self.user.user_type in type_list:
+                    accepted_connection = True
+            elif self.room.type == 2: # Teacher room
+                type_list = [2, 3, 4] # Teacher, HOD, Management
+                if self.user.user_type in type_list:
+                    accepted_connection = True
+            elif self.room.type == 3: # HOD room
+                type_list = [3, 4] # HOD, Management
+                if self.user.user_type in type_list:
+                    accepted_connection = True
+        
+        if accepted_connection:
+            self.accept()
+            # join the room group
+            async_to_sync(self.channel_layer.group_add)(
+                self.room_group_name,
+                self.channel_name,
+            )
+        else:
+            # Explicitly close the connection if not authorized
+            self.close()
 
-        if self.room.type == 1:
-            type_list = [1, 2, 3, 4]
-            if self.user.user_type in type_list:
-                self.accept()
-        elif self.room.type == 2:
-            type_list = [2, 3, 4]
-            if self.user.user_type in type_list:
-                self.accept()
-        elif self.room.type == 3:
-            type_list = [3, 4]
-            if self.user.user_type in type_list:
-                self.accept()
-        # connection has to be accepted
-        # if self.user.user_type == self.room.type:
-        #     self.accept()
-
-        # print(self.user.user_type, self.room.type)
-        # join the room group
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name,
-        )
 
     def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
+        # Only attempt to discard if group_name was set (i.e., connection was accepted and group_add called)
+        if self.room_group_name and self.channel_name:
+            async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name,
         )
