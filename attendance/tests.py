@@ -160,21 +160,21 @@ class StudentAttendanceModelTests(TestCase):
 
 # This is the actual TeacherAttendanceModelTests class
 class TeacherAttendanceModelTests(TestCase): 
-    def setUp(self):
-        # Ensure a unique classroom for this MainAttendance to avoid conflict with unique_together constraint
-        self.classroom = Classroom.objects.create(name="TeacherAtt Main Class", total_strength=30)
-        self.initiator_account, _ = create_user_and_profile("teacher_att_initiator", 3) # HOD initiates
-        self.teacher_account, self.teacher_profile = create_user_and_profile("actual_teacher_for_att", 2, name_prefix="ActualTeacher")
+    # def setUp(self):
+    #     # Ensure a unique classroom for this MainAttendance to avoid conflict with unique_together constraint
+    #     self.classroom = Classroom.objects.create(name="TeacherAtt Main Class", total_strength=30)
+    #     self.initiator_account, _ = create_user_and_profile("teacher_att_initiator", 3) # HOD initiates
+    #     self.teacher_account, self.teacher_profile = create_user_and_profile("actual_teacher_for_att", 2, name_prefix="ActualTeacher")
 
-        self.main_attendance = MainAttendance.objects.create(
-            initiated_by=self.initiator_account,
-            attendance_type=2, # Teacher attendance
-            classroom=self.classroom # Classroom for this specific MainAttendance
-        )
-        self.teacher_attendance = TeacherAttendance.objects.create(
-            attendance=self.main_attendance,
-            teacher=self.teacher_account
-        )
+    #     self.main_attendance = MainAttendance.objects.create(
+    #         initiated_by=self.initiator_account,
+    #         attendance_type=2, # Teacher attendance
+    #         classroom=self.classroom # Classroom for this specific MainAttendance
+    #     )
+    #     self.teacher_attendance = TeacherAttendance.objects.create(
+    #         attendance=self.main_attendance,
+    #         teacher=self.teacher_account
+    #     )
 
     def test_create_teacher_attendance(self):
         self.assertEqual(TeacherAttendance.objects.count(), 1)
