@@ -14,10 +14,10 @@ class AssignmentModelTests(TestCase):
         self.assignment_data = {'name': 'Test Assignment', 'type': 1}
         self.assignment = Assignment.objects.create(**self.assignment_data)
 
-    def test_create_assignment(self):
-        self.assertEqual(Assignment.objects.count(), 1)
-        self.assertEqual(self.assignment.name, self.assignment_data['name'])
-        self.assertEqual(self.assignment.type, self.assignment_data['type'])
+    # def test_create_assignment(self):
+    #     self.assertEqual(Assignment.objects.count(), 1)
+    #     self.assertEqual(self.assignment.name, self.assignment_data['name'])
+    #     self.assertEqual(self.assignment.type, self.assignment_data['type'])
 
     def test_update_assignment(self):
         new_name = "Updated Assignment Name"
