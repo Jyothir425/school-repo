@@ -531,6 +531,3 @@ class TeacherAttendanceCreateViewTests(TestCase):
         # Second attempt
         response = self.client.post(self.url, self.valid_payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-
-@@@@########################################################################
